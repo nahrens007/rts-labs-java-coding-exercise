@@ -1,20 +1,20 @@
 import java.util.LinkedList;
 
-public class UtilCache<T> implements Cache<T> {
+public class LinkedListCache<T> implements Cache<T> {
 
 	private int maxSize;
-	private LinkedList<Map> cache;
+	private LinkedList<Map<T>> cache;
 
-	public UtilCache() {
+	public LinkedListCache() {
 
-		cache = new LinkedList<Map>();
+		cache = new LinkedList<Map<T>>();
 	}
 
-	private class Map<String, U> {
+	private class Map<V> {
 		private String key;
-		private U value;
+		private V value;
 
-		public Map(String key, U value) {
+		public Map(String key, V value) {
 			this.key = key;
 			this.value = value;
 		}
@@ -23,21 +23,21 @@ public class UtilCache<T> implements Cache<T> {
 			return this.key;
 		}
 
-		public U getValue() {
+		public V getValue() {
 			return this.value;
 		}
 
-		public void setValue(U value) {
+		public void setValue(V value) {
 			this.value = value;
 		}
 
 		public java.lang.String toString() {
-			return this.key + " " + this.value;
+			return this.key + ":" + this.value;
 		}
 	}
 
-	private Map<String, T> getMap(String key) {
-		for (Map<String, T> obj : cache) {
+	private Map<T> getMap(String key) {
+		for (Map<T> obj : cache) {
 			if (obj.getKey().compareTo(key) == 0) {
 				return obj;
 			}
@@ -58,7 +58,7 @@ public class UtilCache<T> implements Cache<T> {
 	@Override
 	public void put(String key, T value) {
 
-		Map<String, T> obj = this.getMap(key);
+		Map<T> obj = this.getMap(key);
 
 		// check if key already exists.
 		if (obj == null) {
@@ -71,7 +71,7 @@ public class UtilCache<T> implements Cache<T> {
 
 			// else (now it is less than)
 			// insert at end of cache
-			cache.add(new Map<String, T>(key, value));
+			cache.add(new Map<T>(key, value));
 			return;
 		}
 		
@@ -103,7 +103,6 @@ public class UtilCache<T> implements Cache<T> {
 
 	@Override
 	public int getCurrentCacheSize() {
-		// TODO Auto-generated method stub
 		return this.cache.size();
 	}
 

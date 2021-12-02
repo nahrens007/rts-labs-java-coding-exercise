@@ -2,7 +2,7 @@
 public class Driver {
 
 	public static void main(String[] args) {
-		UtilCache<String> cache = new UtilCache<String>();
+		LinkedListCache<String> cache = new LinkedListCache<String>();
 		cache.setMaxSize(3);
 
 		cache.put("name1", "Nathan");
@@ -24,6 +24,7 @@ public class Driver {
 		
 		cache.setMaxSize(1);
 		cache.printCache();
+		System.out.println(cache.get("name4"));
 		
 		
 	}
